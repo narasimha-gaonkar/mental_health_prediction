@@ -17,11 +17,20 @@ COUNTRY_CREATE_TABLE_SQL = """CREATE TABLE IF NOT EXISTS [Country] (
         """
 COUNTRY_INSERT_TABLE = '''INSERT INTO Country (Country) VALUES(?)'''
 
+COUNTRY_STATE_CREATE_TABLE_SQL = """CREATE TABLE IF NOT EXISTS [CountryState] (
+            [CountryStateID] INTEGER NOT NULL PRIMARY KEY,
+            [CountryID] TEXT NOT NULL,
+            [State] TEXT,
+            FOREIGN KEY (CountryID) REFERENCES Country(CountryID)
+        );
+        """
+COUNTRY_STATE__INSERT_TABLE = '''INSERT INTO CountryState (CountryID, State) VALUES(?,?)'''
+
 Gender = {
     "A little about you":	2,
     "Agender":	2,
     "All":	2,
-    "Androgyne":	1,
+    "Androgyne":	2,
     "Cis Female":	1,
     "Cis Male":	0,
     "Cis Man":	0,
@@ -49,7 +58,7 @@ Gender = {
     "Trans woman":	2,
     "Trans-female":	2,
     "Woman":	1,
-    "cis male":	2,
+    "cis male":	1,
     "cis-female/femme":	1,
     "f":	1,
     "femail":	1,
@@ -57,15 +66,15 @@ Gender = {
     "fluid":	1,
     "m":	0,
     "maile":	0,
-    "male leaning androgynous":	0,
+    "male leaning androgynous":	2,
     "male":	0,
     "msle":	0,
     "non-binary":	2,
-    "ostensibly male":	0,
+    "ostensibly male":	2,
     "p":	2,
     "queer":	2,
     "queer/she/they":	1,
-    "something kinda male?":	0,
+    "something kinda male?":	2,
     "woman":	1,
-    'ostensibly male, unsure what that really means':	0,
+    'ostensibly male, unsure what that really means':	2,
 }
