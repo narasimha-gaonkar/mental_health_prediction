@@ -10,6 +10,13 @@ GENDER_CREATE_TABLE_SQL = """CREATE TABLE IF NOT EXISTS [Gender] (
 GENDER_INSERT_TABLE = '''INSERT INTO Gender (Gender, GenderCode) VALUES(?,?)'''
 
 
+COUNTRY_CREATE_TABLE_SQL = """CREATE TABLE IF NOT EXISTS [Country] (
+            [CountryID] INTEGER NOT NULL PRIMARY KEY,
+            [Country] TEXT NOT NULL
+        );
+        """
+COUNTRY_INSERT_TABLE = '''INSERT INTO Country (Country) VALUES(?)'''
+
 Gender = {
     "A little about you":	2,
     "Agender":	2,
