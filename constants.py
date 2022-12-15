@@ -3,7 +3,7 @@ DATA_FILENAME = 'survey.csv'
 DELEMETER = ','
 
 GENDER_CREATE_TABLE_SQL = """CREATE TABLE IF NOT EXISTS [Gender] (
-            [Gender] TEXT NOT NULL,
+            [Gender] TEXT NOT NULL PRIMARY KEY,
             [GenderCode] INTEGER NOT NULL
         );
         """
@@ -25,6 +25,110 @@ COUNTRY_STATE_CREATE_TABLE_SQL = """CREATE TABLE IF NOT EXISTS [CountryState] (
         );
         """
 COUNTRY_STATE__INSERT_TABLE = '''INSERT INTO CountryState (CountryID, State) VALUES(?,?)'''
+
+EMPLOYEE_RANGE_CREATE_TABLE_SQL = """CREATE TABLE IF NOT EXISTS [EmpRange] (
+            [EmpRange] TEXT NOT NULL PRIMARY KEY,
+            [EmpRangeID] INTEGER NOT NULL
+        );
+        """
+EMPLOYEE_RANGE_INSERT_TABLE = '''INSERT INTO EmpRange (EmpRange,EmpRangeID) VALUES(?,?)'''
+
+AGE_RANGE_CREATE_TABLE_SQL = """CREATE TABLE IF NOT EXISTS [AgeRange] (
+            [AgeRange] TEXT NOT NULL PRIMARY KEY,
+            [AgeRangeID] INTEGER NOT NULL
+        );
+        """
+AGE_RANGE_INSERT_TABLE = '''INSERT INTO AgeRange (AgeRange,AgeRangeID) VALUES(?,?)'''
+
+
+EMPLOYEE_INSERT_TABLE = '''INSERT INTO Employee (Age, Gender, CountryID) VALUES(?,?,?)'''
+
+EMPLOYEE_CREATE_TABLE_SQL = """CREATE TABLE IF NOT EXISTS [Employee] (
+            [EmpID] INTEGER NOT NULL PRIMARY KEY,
+            [Age] INTEGER NOT NULL,
+            [Gender] TEXT NOT NULL,
+            [CountryID] INTEGER NOT NULL,
+            FOREIGN KEY (Gender) REFERENCES Gender(Gender),
+            FOREIGN KEY (CountryID) REFERENCES Country(CountryID)
+        );
+        """
+
+SURVEY_RECORD_RANGE_CREATE_TABLE_SQL = """CREATE TABLE IF NOT EXISTS [SurveyRecord] (
+            [ID] INTEGER NOT NULL PRIMARY KEY,
+            [SelfEmployed] TEXT,
+            [FamilyHistory] TEXT,
+            [Treatment] TEXT,
+            [WorkInterfere] TEXT,
+            [NoEmployees] TEXT,
+            [RemoteWork] TEXT,
+            [TechCompany] TEXT,
+            [Benefits] TEXT,
+            [CareOptions] TEXT,
+            [WellnessProgram] TEXT,
+            [SeekHelp] TEXT,
+            [Anonymous] TEXT,
+            [Leave] TEXT,
+            [MentalHealthConsequences] TEXT,
+            [PhysicalHealthConsequences] TEXT,
+            [Coworkers] TEXT,
+            [Supervisor] TEXT,
+            [MentalHealthInterview] TEXT,
+            [PhysicalHealthInterview] TEXT,
+            [MentalVsPhysical] TEXT,
+            [ObsConsequences] TEXT,
+            FOREIGN KEY (ID) REFERENCES Employee(EmpID),
+            FOREIGN KEY (NoEmployees) REFERENCES EmpRange(EmpRange)
+            
+        );
+        """
+SURVEY_RECORD_RANGE_INSERT_TABLE = '''INSERT INTO SurveyRecord(SelfEmployed,FamilyHistory,Treatment,WorkInterfere,
+NoEmployees,RemoteWork,TechCompany,Benefits,CareOptions,WellnessProgram,SeekHelp,Anonymous,Leave,MentalHealthConsequences,
+PhysicalHealthConsequences,Coworkers,Supervisor,MentalHealthInterview,PhysicalHealthInterview,MentalVsPhysical,
+ObsConsequences) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)'''
+
+
+FETCH_DATA_MODELLING = '''SELECT 
+                        Employee.EmpID,
+                        Employee.Age,
+                        Gender.GenderCode,
+                        CASE WHEN Employee.Age BETWEEN 0 AND 20 THEN 0
+                            WHEN Employee.Age BETWEEN 21 AND 30 THEN 1
+                            WHEN Employee.Age BETWEEN 31 AND 65 THEN 2
+                            WHEN Employee.Age BETWEEN 66 AND 100 THEN 3
+                        END AS AgeRange,
+                        Employee.CountryID,
+                        SurveyRecord.NoEmployees,
+                        EmpRange.EmpRangeID as NoEmployeesRange,
+                        SurveyRecord.SelfEmployed,
+                        SurveyRecord.FamilyHistory,
+                        SurveyRecord.Treatment,
+                        SurveyRecord.WorkInterfere,
+                        SurveyRecord.RemoteWork,
+                        SurveyRecord.TechCompany,
+                        SurveyRecord.Benefits,
+                        SurveyRecord.CareOptions,
+                        SurveyRecord.WellnessProgram,
+                        SurveyRecord.SeekHelp,
+                        SurveyRecord.Anonymous,
+                        SurveyRecord.Leave,
+                        SurveyRecord.MentalHealthConsequences,
+                        SurveyRecord.PhysicalHealthConsequences,
+                        SurveyRecord.Coworkers,
+                        SurveyRecord.Supervisor,
+                        SurveyRecord.MentalHealthInterview,
+                        SurveyRecord.PhysicalHealthInterview,
+                        SurveyRecord.MentalVsPhysical,
+                        SurveyRecord.ObsConsequences
+                        FROM SurveyRecord
+                        INNER JOIN Employee
+                            ON SurveyRecord.ID = Employee.EmpID
+                        INNER JOIN Country
+                            ON Employee.CountryID = Country.CountryID
+                        INNER JOIN Gender
+                            ON Employee.Gender = Gender.Gender
+                        INNER JOIN EmpRange
+                            ON SurveyRecord.NoEmployees = EmpRange.EmpRange
+                        '''
 
 Gender = {
     "A little about you":	2,
