@@ -1,4 +1,4 @@
-# Project Title: Predicting Mental Health in the IT Industry
+Predicting Mental Health in the IT Industry
 
 # Objective: 
   Visualization, Data Normalization, Machine Learning Predictions
