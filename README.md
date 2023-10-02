@@ -8,7 +8,10 @@ Predicting Mental Health in the IT Industry
 # Overview:
 To find the frequency and prediction of mental illness of employees in the tech industry based on various factors like gender, geographical location, history of mental health illness by using several Data Visualization methods, Data Normalization and Machine Learning models.
 
-Project Structure:
+# Data Description:
+Obtained this dataset from a 2014 survey that measures attitudes towards mental health and frequency of mental health issues in the tech workplace. This dataset contains 27 columns with critical attributes such as family history, wellness program, anonymity, gender which leads to main analysis.
+
+# Project Structure:
 
 **Data Normalization**: The dataset is transformed into a normalized format and stored in an SQLite database to enhance data organization and efficiency.
 
